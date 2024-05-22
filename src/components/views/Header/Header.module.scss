@@ -1,0 +1,19 @@
+@import '../../../styles/settings.scss';
+
+.header {
+    position: relative;
+
+    &___title {
+        font-family: $font-header;
+    }
+
+    &::after {
+        position: absolute;
+        content: "";
+        background-color: $color-primary;
+        width: 30%;
+        height: 2px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+}
