@@ -43,28 +43,46 @@ const ContentTable = () => {
     indexOfLastCharacter
   );
 
+  const characterInfo = (videoGames, imageUrl, name) => (
+    <>
+      <td>{videoGames.length > 0 ? videoGames.join(", ") : "no info"}</td>
+      <td className={styles.table__image}>
+        <img className={styles.table__image___img} src={imageUrl} alt={name} />
+      </td>
+      <td>
+        <input type="checkbox" />
+      </td>
+    </>
+  );
+
   return (
     <section>
       <table className={styles.table}>
         <tr>
           <th>Name</th>
           <th>Movie</th>
-          <th>Video game</th>
+          <th>Video games</th>
           <th>Me!</th>
           <th>Choose me</th>
         </tr>
         {currentCharacters.map(({ _id, name, films, videoGames, imageUrl }) => (
-          <tr key={_id}>
-            <td>{name}</td>
-            <td>{films}</td>
-            <td>{videoGames}</td>
-            <td>
-              <img src={imageUrl} alt={name} />
-            </td>
-            <td>
-              <input type="checkbox" />
-            </td>
-          </tr>
+          <>
+            {films.length > 0 ? (
+              films.map((film, index) => (
+                <tr key={`${_id}-${index + 1}`}>
+                  <td>{name}</td>
+                  <td>{film}</td>
+                  {characterInfo(videoGames, imageUrl, name)}
+                </tr>
+              ))
+            ) : (
+              <tr key={_id}>
+                <td>{name}</td>
+                <td>no info</td>
+                {characterInfo(videoGames, imageUrl, name)}
+              </tr>
+            )}
+          </>
         ))}
       </table>
       <Pagination
