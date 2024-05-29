@@ -4,7 +4,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import PropTypes from "prop-types";
-import styles from './Pagination.module.scss';
+import styles from "./Pagination.module.scss";
 
 const Pagination = ({
   nextPage,
@@ -21,11 +21,13 @@ const Pagination = ({
         disabled={currentPage === 1}
         onClick={firstPage}
         content={<MdKeyboardDoubleArrowLeft />}
+        ariaLabel={"first page"}
       />
       <Button
         disabled={currentPage === 1}
         onClick={previousPage}
         content={<MdKeyboardArrowLeft />}
+        ariaLabel={"previous page"}
       />
       {[...Array(totalPages)].map((_, index) => (
         <Button
@@ -33,17 +35,20 @@ const Pagination = ({
           content={index + 1}
           onClick={() => goToPage(index + 1)}
           disabled={currentPage === index + 1}
+          ariaLabel={`page ${index + 1}`}
         />
       ))}
       <Button
         disabled={currentPage === totalPages}
         onClick={nextPage}
         content={<MdKeyboardArrowRight />}
+        ariaLabel={"next page"}
       />
       <Button
         disabled={currentPage === totalPages}
         onClick={lastPage}
         content={<MdKeyboardDoubleArrowRight />}
+        ariaLabel={"last page"}
       />
     </section>
   );
