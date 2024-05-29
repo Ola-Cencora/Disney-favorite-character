@@ -2,10 +2,10 @@ import ContentTable from "../../features/ContentTable/ContentTable";
 import Filters from "../../features/Filters/Filters";
 
 const MainContent = () => (
-    <div>
-        <Filters />
-        <ContentTable />
-    </div>
+  <main>
+    <Filters />
+    <ContentTable />
+  </main>
 );
 
 export default MainContent;

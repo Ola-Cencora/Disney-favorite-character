@@ -7,6 +7,7 @@ import {
   goToPage,
   goToPreviousPage,
 } from "../../../utils/changePage";
+import { ITEMS_PER_PAGE } from "../../../constans";
 import styles from "./ContentTable.module.scss";
 import Pagination from "../Pagination/Pagination";
 
@@ -15,8 +16,7 @@ const ContentTable = () => {
   const [count, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(count / itemsPerPage);
+  const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
 
   const sortedCharacters = characters.sort((a, b) => {
     if (a.name < b.name) return -1;
@@ -36,8 +36,8 @@ const ContentTable = () => {
       });
   }, []);
 
-  const indexOfLastCharacter = currentPage * itemsPerPage;
-  const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
+  const indexOfLastCharacter = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstCharacter = indexOfLastCharacter - ITEMS_PER_PAGE;
   const currentCharacters = sortedCharacters.slice(
     indexOfFirstCharacter,
     indexOfLastCharacter

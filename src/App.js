@@ -1,6 +1,6 @@
-import Header from "./components/views/Header/Header";
-import MainContent from "./components/views/MainContent/MainContent";
-//CR
+import Header from "./components/global/Header/Header";
+import MainContent from "./components/global/MainContent/MainContent";
+
 const App = () => (
   <>
     <Header />
