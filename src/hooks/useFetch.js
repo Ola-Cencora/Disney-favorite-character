@@ -6,6 +6,9 @@ export const useFetch = (url) => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
 
+  const films = characters.map((character) => character.films).flat();
+  const games = characters.map((character) => character.videoGames).flat();
+
   useEffect(() => {
     const fetchData = () => {
       setIsPending(true);
@@ -24,5 +27,5 @@ export const useFetch = (url) => {
     fetchData();
   }, [url]);
 
-  return { characters, count, isPending, error };
+  return { characters, count, isPending, error, films, games };
 };
