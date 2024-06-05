@@ -10,7 +10,7 @@ import { ITEMS_PER_PAGE, ALL_CHARACTERS_URL } from "../../../constans";
 import { useFetch } from "../../../hooks/useFetch";
 import Pagination from "../Pagination/Pagination";
 import CharactersTable from "../CharactersTable/CharactersTable";
-import Spinner from "../../common/Button/Spinner/Spinner";
+import Spinner from "../../common/Spinner/Spinner";
 
 const ContentTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
