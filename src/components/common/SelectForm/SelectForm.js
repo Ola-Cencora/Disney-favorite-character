@@ -1,16 +1,18 @@
 import PropTypes from "prop-types";
 
-const SelectForm = ({ title, options }) => {
+const SelectForm = ({ title, options, setOption }) => {
   return (
     <form>
       <label>
         <p>{title}</p>
-        <select>
-          <option value="" disabled selected hidden>
+        <select defaultValue="" onChange={(e) => setOption(e.target.value)}>
+          <option value="" disabled hidden>
             select
           </option>
           {options.map((option, index) => (
-            <option key={index}>{option}</option>
+            <option key={index} value={option}>
+              {option}
+            </option>
           ))}
         </select>
       </label>

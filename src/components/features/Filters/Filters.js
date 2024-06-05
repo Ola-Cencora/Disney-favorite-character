@@ -1,15 +1,19 @@
 import SelectForm from "../../common/SelectForm/SelectForm";
-import { useFetch } from "../../../hooks/useFetch";
-import { ALL_CHARACTERS_URL } from "../../../constans";
 import styles from "./Filters.module.scss";
 
-const Filters = () => {
-  const { films, games } = useFetch(ALL_CHARACTERS_URL);
-
+const Filters = ({ films, games, setSelectedFilm, setSelectedGame }) => {
   return (
     <section className={styles.filters}>
-      <SelectForm title="Select a movie" options={films} />
-      <SelectForm title="Select a game" options={games} />
+      <SelectForm
+        setOption={setSelectedFilm}
+        title="Select a movie"
+        options={films}
+      />
+      <SelectForm
+        setOption={setSelectedGame}
+        title="Select a game"
+        options={games}
+      />
     </section>
   );
 };

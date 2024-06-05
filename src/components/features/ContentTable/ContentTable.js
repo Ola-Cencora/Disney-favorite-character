@@ -6,15 +6,13 @@ import {
   goToPage,
   goToPreviousPage,
 } from "../../../utils/changePage";
-import { ITEMS_PER_PAGE, ALL_CHARACTERS_URL } from "../../../constans";
-import { useFetch } from "../../../hooks/useFetch";
+import { ITEMS_PER_PAGE } from "../../../constans";
 import Pagination from "../Pagination/Pagination";
 import CharactersTable from "../CharactersTable/CharactersTable";
 import Spinner from "../../common/Spinner/Spinner";
 
-const ContentTable = () => {
+const ContentTable = ({ characters, count, isPending, error }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { characters, count, isPending, error } = useFetch(ALL_CHARACTERS_URL);
 
   const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
 
