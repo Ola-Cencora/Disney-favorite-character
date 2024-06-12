@@ -11,7 +11,13 @@ import Pagination from "../Pagination/Pagination";
 import CharactersTable from "../CharactersTable/CharactersTable";
 import Spinner from "../../common/Spinner/Spinner";
 
-const ContentTable = ({ characters, count, isPending, error }) => {
+const ContentTable = ({
+  characters,
+  count,
+  isPending,
+  error,
+  selectedFilm,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
@@ -22,7 +28,11 @@ const ContentTable = ({ characters, count, isPending, error }) => {
       {error && <p>{error}</p>}
       {characters && !isPending && (
         <section>
-          <CharactersTable currentPage={currentPage} characters={characters} />
+          <CharactersTable
+            currentPage={currentPage}
+            characters={characters}
+            selectedFilm={selectedFilm}
+          />
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

@@ -6,8 +6,14 @@ export const useFetch = (url) => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
 
-  const films = characters.map((character) => character.films).flat();
-  const games = characters.map((character) => character.videoGames).flat();
+  const films = characters
+    .map((character) => character.films.map((film) => film.split(" (").shift()))
+    .flat();
+  const games = characters
+    .map((character) =>
+      character.videoGames.map((game) => game.split(" (").shift())
+    )
+    .flat();
 
   useEffect(() => {
     const fetchData = () => {

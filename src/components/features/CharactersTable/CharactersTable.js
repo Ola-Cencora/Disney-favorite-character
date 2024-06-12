@@ -1,7 +1,7 @@
 import { ITEMS_PER_PAGE } from "../../../constans";
 import styles from "./CharactersTable.module.scss";
 
-const CharactersTable = ({ currentPage, characters }) => {
+const CharactersTable = ({ currentPage, characters, selectedFilm }) => {
   const sortedCharacters = characters.sort((a, b) => {
     if (a.name < b.name) return -1;
     if (a.name > b.name) return 1;
@@ -41,13 +41,15 @@ const CharactersTable = ({ currentPage, characters }) => {
       <tbody>
         {currentCharacters.map(({ _id, name, films, videoGames, imageUrl }) => {
           if (films.length > 0) {
-            return films.map((film, index) => (
-              <tr key={`${_id}-${index + 1}`}>
-                <td>{name}</td>
-                <td>{film}</td>
-                {characterInfo(videoGames, imageUrl, name)}
-              </tr>
-            ));
+            return films
+              .filter((film) => !selectedFilm || film === selectedFilm)
+              .map((film, index) => (
+                <tr key={`${_id}-${index + 1}`}>
+                  <td>{name}</td>
+                  <td>{film}</td>
+                  {characterInfo(videoGames, imageUrl, name)}
+                </tr>
+              ));
           } else {
             return (
               <tr key={_id}>
