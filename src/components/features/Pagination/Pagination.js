@@ -32,6 +32,22 @@ const Pagination = ({ setCharacters, setIsPending, setError }) => {
   };
   const handleLastPage = () => setCurrentPage(totalPages);
 
+  const pageButtons = () => {
+    const maxPagesToShow = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let endPage = startPage + maxPagesToShow - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index
+    );
+  };
+
   return (
     <section className={styles.pagination}>
       <Button
@@ -46,13 +62,13 @@ const Pagination = ({ setCharacters, setIsPending, setError }) => {
         content={<MdKeyboardArrowLeft />}
         ariaLabel={"previous page"}
       />
-      {[...Array(totalPages)].map((_, index) => (
+      {pageButtons().map((page) => (
         <Button
-          key={index}
-          content={index + 1}
-          onClick={() => handleGoToPage(index + 1)}
-          disabled={currentPage === index + 1}
-          ariaLabel={`page ${index + 1}`}
+          key={page}
+          content={page}
+          onClick={() => handleGoToPage(page)}
+          disabled={currentPage === page}
+          ariaLabel={`page ${page}`}
         />
       ))}
       <Button
