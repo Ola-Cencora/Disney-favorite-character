@@ -19,9 +19,8 @@ const MainContent = () => {
     url = CHARACTERS_BY_FILM_URL(selectedFilm);
   }
 
-  const { characters, count, isPending, error } = useFetch(url);
+  const { characters, isPending, error } = useFetch(url);
   const { films, games } = useFetch(ALL_CHARACTERS_URL);
-
   const gamesByFilms = [];
   for (let i = 0; i < characters.length; i++) {
     gamesByFilms.push(characters[i].videoGames);
@@ -36,11 +35,10 @@ const MainContent = () => {
         games={selectedFilm ? gamesByFilms.flat() : games}
       />
       <ContentTable
+        selectedFilm={selectedFilm}
         characters={characters}
-        count={count}
         isPending={isPending}
         error={error}
-        selectedFilm={selectedFilm}
       />
     </main>
   );

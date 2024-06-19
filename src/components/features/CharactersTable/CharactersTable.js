@@ -1,19 +1,12 @@
-import { ITEMS_PER_PAGE } from "../../../constans";
 import styles from "./CharactersTable.module.scss";
+import PropTypes from "prop-types";
 
-const CharactersTable = ({ currentPage, characters, selectedFilm }) => {
+const CharactersTable = ({ characters, selectedFilm }) => {
   const sortedCharacters = characters.sort((a, b) => {
     if (a.name < b.name) return -1;
     if (a.name > b.name) return 1;
     return 0;
   });
-
-  const indexOfLastCharacter = currentPage * ITEMS_PER_PAGE;
-  const indexOfFirstCharacter = indexOfLastCharacter - ITEMS_PER_PAGE;
-  const currentCharacters = sortedCharacters.slice(
-    indexOfFirstCharacter,
-    indexOfLastCharacter
-  );
 
   const characterInfo = (videoGames, imageUrl, name) => (
     <>
@@ -39,7 +32,7 @@ const CharactersTable = ({ currentPage, characters, selectedFilm }) => {
         </tr>
       </thead>
       <tbody>
-        {currentCharacters.map(({ _id, name, films, videoGames, imageUrl }) => {
+        {sortedCharacters.map(({ _id, name, films, videoGames, imageUrl }) => {
           if (films.length > 0) {
             return films
               .filter((film) => !selectedFilm || film === selectedFilm)
@@ -63,6 +56,11 @@ const CharactersTable = ({ currentPage, characters, selectedFilm }) => {
       </tbody>
     </table>
   );
+};
+
+CharactersTable.propTypes = {
+  characters: PropTypes.array.isRequired,
+  selectedFilm: PropTypes.string,
 };
 
 export default CharactersTable;

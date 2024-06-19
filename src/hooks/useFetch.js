@@ -5,6 +5,7 @@ export const useFetch = (url) => {
   const [count, setCount] = useState(0);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
 
   const films = characters
     .map((character) => character.films.map((film) => film.split(" (").shift()))
@@ -21,17 +22,18 @@ export const useFetch = (url) => {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          setIsPending(false);
           setCharacters(data.data);
           setCount(data.info.count);
+          setTotalPages(data.info.totalPages);
+          setIsPending(false);
         })
         .catch((error) => {
-          setIsPending(false);
           setError(`Error fetching characters: ${error}`);
+          setIsPending(false);
         });
     };
     fetchData();
   }, [url]);
 
-  return { characters, count, isPending, error, films, games };
+  return { characters, count, isPending, error, films, games, totalPages };
 };

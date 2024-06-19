@@ -1,53 +1,40 @@
 import { useState } from "react";
-import {
-  goToFirstPage,
-  goToLastPage,
-  goToNextPage,
-  goToPage,
-  goToPreviousPage,
-} from "../../../utils/changePage";
-import { ITEMS_PER_PAGE } from "../../../constans";
 import Pagination from "../Pagination/Pagination";
 import CharactersTable from "../CharactersTable/CharactersTable";
 import Spinner from "../../common/Spinner/Spinner";
+import PropTypes from "prop-types";
 
-const ContentTable = ({
-  characters,
-  count,
-  isPending,
-  error,
-  selectedFilm,
-}) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+const ContentTable = ({ selectedFilm, characters, isPending, error }) => {
+  const [charactersPagination, setCharactersPagination] = useState([]);
+  const [isPendingPagination, setIsPendingPagination] = useState(false);
+  const [errorPagination, setErrorPagination] = useState(null);
 
   return (
     <>
-      {isPending && <Spinner />}
-      {error && <p>{error}</p>}
+      {(isPendingPagination || isPending) && <Spinner />}
+      {(errorPagination || error) && <p>{error}</p>}
       {characters && !isPending && (
         <section>
           <CharactersTable
-            currentPage={currentPage}
-            characters={characters}
+            characters={charactersPagination || characters}
             selectedFilm={selectedFilm}
           />
           <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            nextPage={() =>
-              goToNextPage(setCurrentPage, currentPage, totalPages)
-            }
-            previousPage={() => goToPreviousPage(setCurrentPage, currentPage)}
-            firstPage={() => goToFirstPage(setCurrentPage)}
-            lastPage={() => goToLastPage(setCurrentPage, totalPages)}
-            goToPage={(pageNumber) => goToPage(setCurrentPage, pageNumber)}
+            setCharacters={setCharactersPagination}
+            setIsPending={setIsPendingPagination}
+            setError={setErrorPagination}
           />
         </section>
       )}
     </>
   );
+};
+
+ContentTable.propTypes = {
+  selectedFilm: PropTypes.string,
+  characters: PropTypes.array.isRequired,
+  isPending: PropTypes.bool.isRequired,
+  error: PropTypes.bool,
 };
 
 export default ContentTable;
