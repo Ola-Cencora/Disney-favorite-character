@@ -1,5 +1,6 @@
 import SelectForm from "../../common/SelectForm/SelectForm";
 import styles from "./Filters.module.scss";
+import PropTypes from "prop-types";
 
 const Filters = ({ films, games, setSelectedFilm, setSelectedGame }) => {
   return (
@@ -16,6 +17,13 @@ const Filters = ({ films, games, setSelectedFilm, setSelectedGame }) => {
       />
     </section>
   );
+};
+
+Filters.propTypes = {
+  films: PropTypes.array.isRequired,
+  games: PropTypes.array.isRequired,
+  setSelectedFilm: PropTypes.func.isRequired,
+  setSelectedGame: PropTypes.func.isRequired,
 };
 
 export default Filters;

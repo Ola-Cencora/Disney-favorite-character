@@ -52,7 +52,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
           key={page}
           content={page}
           onClick={() => handleGoToPage(page)}
-          disabled={currentPage === page}
+          disabled={currentPage === page || totalPages === 1}
           ariaLabel={`page ${page}`}
         />
       ))}

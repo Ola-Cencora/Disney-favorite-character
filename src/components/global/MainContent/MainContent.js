@@ -7,6 +7,7 @@ import {
   CHARACTERS_BY_FILM_URL,
   CHANGE_PAGE_URL,
 } from "../../../constans";
+import { removeTxtAfterBrackets } from "../../utils/removeTxtAfterBrackets";
 import { useState } from "react";
 
 const MainContent = () => {
@@ -27,7 +28,8 @@ const MainContent = () => {
   const { films, games } = useFetch(ALL_CHARACTERS_URL);
   const gamesByFilms = [];
   for (let i = 0; i < characters.length; i++) {
-    gamesByFilms.push(characters[i].videoGames);
+    const character = characters[i];
+    gamesByFilms.push(character.videoGames.map(removeTxtAfterBrackets));
   }
 
   return (

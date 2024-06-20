@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { removeTxtAfterBrackets } from "../components/utils/removeTxtAfterBrackets";
 
 export const useFetch = (url) => {
   const [characters, setCharacters] = useState([]);
@@ -8,11 +9,13 @@ export const useFetch = (url) => {
   const [totalPages, setTotalPages] = useState(0);
 
   const films = characters
-    .map((character) => character.films.map((film) => film.split(" (").shift()))
+    .map((character) =>
+      character.films.map((film) => removeTxtAfterBrackets(film))
+    )
     .flat();
   const games = characters
     .map((character) =>
-      character.videoGames.map((game) => game.split(" (").shift())
+      character.videoGames.map((game) => removeTxtAfterBrackets(game))
     )
     .flat();
 
@@ -22,7 +25,12 @@ export const useFetch = (url) => {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          setCharacters(data.data);
+          const fetchedCharacters = data.data;
+          setCharacters(
+            Array.isArray(fetchedCharacters)
+              ? fetchedCharacters
+              : [fetchedCharacters]
+          );
           setCount(data.info.count);
           setTotalPages(data.info.totalPages);
           setIsPending(false);

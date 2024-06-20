@@ -23,6 +23,7 @@ const SelectForm = ({ title, options, setOption }) => {
 SelectForm.propTypes = {
   title: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setOption: PropTypes.func.isRequired,
 };
 
 export default SelectForm;
