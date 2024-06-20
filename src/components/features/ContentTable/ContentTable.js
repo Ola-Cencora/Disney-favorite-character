@@ -1,28 +1,31 @@
-import { useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import CharactersTable from "../CharactersTable/CharactersTable";
 import Spinner from "../../common/Spinner/Spinner";
 import PropTypes from "prop-types";
 
-const ContentTable = ({ selectedFilm, characters, isPending, error }) => {
-  const [charactersPagination, setCharactersPagination] = useState([]);
-  const [isPendingPagination, setIsPendingPagination] = useState(false);
-  const [errorPagination, setErrorPagination] = useState(null);
-
+const ContentTable = ({
+  selectedFilm,
+  characters,
+  isPending,
+  error,
+  currentPage,
+  setCurrentPage,
+  totalPages,
+}) => {
   return (
     <>
-      {(isPendingPagination || isPending) && <Spinner />}
-      {(errorPagination || error) && <p>{error}</p>}
+      {isPending && <Spinner />}
+      {error && <p>{error}</p>}
       {characters && !isPending && (
         <section>
           <CharactersTable
-            characters={charactersPagination || characters}
+            characters={characters}
             selectedFilm={selectedFilm}
           />
           <Pagination
-            setCharacters={setCharactersPagination}
-            setIsPending={setIsPendingPagination}
-            setError={setErrorPagination}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
           />
         </section>
       )}
@@ -35,6 +38,9 @@ ContentTable.propTypes = {
   characters: PropTypes.array.isRequired,
   isPending: PropTypes.bool.isRequired,
   error: PropTypes.bool,
+  currentPage: PropTypes.number,
+  setCurrentPage: PropTypes.func,
+  totalPages: PropTypes.number.isRequired,
 };
 
 export default ContentTable;

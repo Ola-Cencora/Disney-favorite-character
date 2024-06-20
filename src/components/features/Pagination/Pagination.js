@@ -4,24 +4,10 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import PropTypes from "prop-types";
-import { CHANGE_PAGE_URL } from "../../../constans";
 import styles from "./Pagination.module.scss";
-import { useFetch } from "../../../hooks/useFetch";
-import { useEffect, useState } from "react";
+import { PAGINATION_PAGES } from "../../../constans";
 
-const Pagination = ({ setCharacters, setIsPending, setError }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const { characters, totalPages, isPending, error } = useFetch(
-    CHANGE_PAGE_URL(currentPage)
-  );
-
-  useEffect(() => {
-    setCharacters(characters);
-    setIsPending(isPending);
-    setError(error);
-  }, [characters, setCharacters, isPending, setIsPending, error, setError]);
-
+const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   const handleFirstPage = () => setCurrentPage(1);
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -33,13 +19,12 @@ const Pagination = ({ setCharacters, setIsPending, setError }) => {
   const handleLastPage = () => setCurrentPage(totalPages);
 
   const pageButtons = () => {
-    const maxPagesToShow = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = startPage + maxPagesToShow - 1;
+    let startPage = Math.max(1, currentPage - Math.floor(PAGINATION_PAGES / 2));
+    let endPage = startPage + PAGINATION_PAGES - 1;
 
     if (endPage > totalPages) {
       endPage = totalPages;
-      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      startPage = Math.max(1, endPage - PAGINATION_PAGES + 1);
     }
 
     return Array.from(
@@ -88,9 +73,9 @@ const Pagination = ({ setCharacters, setIsPending, setError }) => {
 };
 
 Pagination.propTypes = {
-  setCharacters: PropTypes.func.isRequired,
-  setIsPending: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  totalPages: PropTypes.number.isRequired,
 };
 
 export default Pagination;

@@ -11,3 +11,6 @@ export const CHARACTERS_BY_FILM_AND_GAME_URL = (film, game) =>
 
 export const CHANGE_PAGE_URL = (page) =>
   `https://api.disneyapi.dev/character?page=${page}`;
+
+// global
+export const PAGINATION_PAGES = 5;
