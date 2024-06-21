@@ -11,6 +11,8 @@ const ContentTable = ({
   currentPage,
   setCurrentPage,
   totalPages,
+  selectedCharacters,
+  setSelectedCharacters,
 }) => {
   return (
     <>
@@ -21,6 +23,8 @@ const ContentTable = ({
           <CharactersTable
             characters={characters}
             selectedFilm={selectedFilm}
+            selectedCharacters={selectedCharacters}
+            setSelectedCharacters={setSelectedCharacters}
           />
           <Pagination
             currentPage={currentPage}
@@ -41,6 +45,8 @@ ContentTable.propTypes = {
   currentPage: PropTypes.number,
   setCurrentPage: PropTypes.func,
   totalPages: PropTypes.number.isRequired,
+  selectedCharacters: PropTypes.array,
+  setSelectedCharacters: PropTypes.func.isRequired,
 };
 
 export default ContentTable;

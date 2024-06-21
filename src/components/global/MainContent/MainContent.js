@@ -14,6 +14,7 @@ const MainContent = () => {
   const [selectedFilm, setSelectedFilm] = useState("");
   const [selectedGame, setSelectedGame] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCharacters, setSelectedCharacters] = useState([]);
 
   let url = ALL_CHARACTERS_URL;
   if (selectedFilm && selectedGame) {
@@ -48,6 +49,8 @@ const MainContent = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
+        selectedCharacters={selectedCharacters}
+        setSelectedCharacters={setSelectedCharacters}
       />
     </main>
   );
