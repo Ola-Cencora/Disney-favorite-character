@@ -33,6 +33,10 @@ const MainContent = () => {
     gamesByFilms.push(character.videoGames.map(removeTxtAfterBrackets));
   }
 
+  const handleCharactersSelect = () => {
+    console.log(selectedCharacters);
+  };
+
   return (
     <main>
       <Filters
@@ -51,6 +55,7 @@ const MainContent = () => {
         totalPages={totalPages}
         selectedCharacters={selectedCharacters}
         setSelectedCharacters={setSelectedCharacters}
+        handleCharactersSelect={handleCharactersSelect}
       />
     </main>
   );

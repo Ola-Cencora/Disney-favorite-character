@@ -40,12 +40,14 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         onClick={handleFirstPage}
         content={<MdKeyboardDoubleArrowLeft />}
         ariaLabel={"first page"}
+        variant="round"
       />
       <Button
         disabled={currentPage === 1}
         onClick={handlePreviousPage}
         content={<MdKeyboardArrowLeft />}
         ariaLabel={"previous page"}
+        variant="round"
       />
       {pageButtons().map((page) => (
         <Button
@@ -54,6 +56,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
           onClick={() => handleGoToPage(page)}
           disabled={currentPage === page || totalPages === 1}
           ariaLabel={`page ${page}`}
+          variant="round"
         />
       ))}
       <Button
@@ -61,12 +64,14 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
         onClick={handleNextPage}
         content={<MdKeyboardArrowRight />}
         ariaLabel={"next page"}
+        variant="round"
       />
       <Button
         disabled={currentPage === totalPages}
         onClick={handleLastPage}
         content={<MdKeyboardDoubleArrowRight />}
         ariaLabel={"last page"}
+        variant="round"
       />
     </section>
   );
