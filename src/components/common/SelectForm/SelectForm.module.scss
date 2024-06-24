@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+
+.form {
+  &__select {
+    width: 100%; 
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 37.5rem) {
+  .form__select {
+    width: 60%;
+  }
+}

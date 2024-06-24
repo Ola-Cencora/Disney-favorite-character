@@ -1,14 +1,46 @@
 @import '../../../styles/variables.scss';
 
 .table {
-    margin: 30px auto;
-    max-width: 70vw;
+    margin: 0 auto 30px;
+    table-layout: fixed;
+    width: 100%;
+    
+    th, td {
+        width: 20%;
+        padding: 10px 0;
+    }
+
+    &__header th {
+        padding-bottom: 30px;
+    }
+
+    &__body tr:hover {
+        background-color: lighten($color-secondary, 20%);
+        transition: $transition-background;
+    }
 
     &__image {
         height: 120px;
 
         &___img {
             height: 100%;
+        }
+    }
+
+    &___hide {
+        display: none;
+    }
+
+}
+
+@media (min-width: 37.5rem) {
+
+    .table {
+        width: auto;
+        max-width: 70vw;
+        
+        &___hide {
+            display: table-cell;
         }
     }
 }

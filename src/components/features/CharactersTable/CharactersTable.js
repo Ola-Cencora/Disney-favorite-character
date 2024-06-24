@@ -24,8 +24,10 @@ const CharactersTable = ({
 
   const characterInfo = (videoGames, imageUrl, name, film) => (
     <>
-      <td>{videoGames.length > 0 ? videoGames.join(", ") : "no info"}</td>
-      <td className={styles.table__image}>
+      <td className={styles.table___hide}>
+        {videoGames.length > 0 ? videoGames.join(", ") : "no info"}
+      </td>
+      <td className={`${styles.table__image} ${styles.table___hide}`}>
         <img className={styles.table__image___img} src={imageUrl} alt={name} />
       </td>
       <td>
@@ -41,16 +43,16 @@ const CharactersTable = ({
 
   return (
     <table className={styles.table}>
-      <thead>
+      <thead className={styles.table__header}>
         <tr>
           <th>Name</th>
           <th>Movie</th>
-          <th>Video games</th>
-          <th>Me!</th>
+          <th className={styles.table___hide}>Video games</th>
+          <th className={styles.table___hide}>Me!</th>
           <th>Choose me</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.table__body}>
         {sortedCharacters.map(({ _id, name, films, videoGames, imageUrl }) => {
           if (films.length > 0) {
             return films

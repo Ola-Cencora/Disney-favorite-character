@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
+import styles from "./SelectForm.module.scss";
 
 const SelectForm = ({ title, options, setOption }) => {
   return (
-    <form>
+    <form className={styles.form}>
       <label>
         <p>{title}</p>
-        <select defaultValue="" onChange={(e) => setOption(e.target.value)}>
+        <select
+          className={styles.form__select}
+          defaultValue=""
+          onChange={(e) => setOption(e.target.value)}
+        >
           <option value="" disabled hidden>
             select
           </option>
