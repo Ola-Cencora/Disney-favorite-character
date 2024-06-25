@@ -1,5 +1,6 @@
 import styles from "./CharactersTable.module.scss";
 import SelectCheckbox from "../../common/SelectCheckbox/SelectCheckbox";
+import DropdownList from "../../features/DropdownList/DropdownList";
 import PropTypes from "prop-types";
 
 const CharactersTable = ({
@@ -22,10 +23,23 @@ const CharactersTable = ({
     return 0;
   });
 
+  const showGames = (videoGames) => {
+    const gamesList = videoGames.join(", ");
+    return (
+      <>
+        {videoGames.length > 2 ? (
+          <DropdownList list={videoGames} />
+        ) : (
+          <span>{gamesList}</span>
+        )}
+      </>
+    );
+  };
+
   const characterInfo = (videoGames, imageUrl, name, film) => (
     <>
       <td className={styles.table___hide}>
-        {videoGames.length > 0 ? videoGames.join(", ") : "no info"}
+        {videoGames.length > 0 ? showGames(videoGames) : "no info"}
       </td>
       <td className={`${styles.table__image} ${styles.table___hide}`}>
         <img className={styles.table__image___img} src={imageUrl} alt={name} />
