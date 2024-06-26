@@ -10,12 +10,14 @@ import {
 import { removeTxtAfterBrackets } from "../../utils/removeTxtAfterBrackets";
 import { useState } from "react";
 import ScrollTopButton from "../../features/ScrollTopButton/ScrollTopButton";
+import SelectedCharactersList from "../../features/SelectedCharactersList/SelectedCharactersList";
 
 const MainContent = () => {
   const [selectedFilm, setSelectedFilm] = useState("");
   const [selectedGame, setSelectedGame] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCharacters, setSelectedCharacters] = useState([]);
+  const [modal, setModal] = useState(false);
 
   let url = ALL_CHARACTERS_URL;
   if (selectedFilm && selectedGame) {
@@ -35,7 +37,7 @@ const MainContent = () => {
   }
 
   const handleCharactersSelect = () => {
-    console.log(selectedCharacters);
+    setModal(true);
   };
 
   return (
@@ -58,6 +60,12 @@ const MainContent = () => {
         setSelectedCharacters={setSelectedCharacters}
         handleCharactersSelect={handleCharactersSelect}
       />
+      {modal && (
+        <SelectedCharactersList
+          selectedCharacters={selectedCharacters}
+          setModal={setModal}
+        />
+      )}
       <ScrollTopButton />
     </main>
   );
