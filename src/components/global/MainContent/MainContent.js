@@ -9,6 +9,7 @@ import {
 } from "../../../constans";
 import { removeTxtAfterBrackets } from "../../utils/removeTxtAfterBrackets";
 import { useState } from "react";
+import ScrollTopButton from "../../features/ScrollTopButton/ScrollTopButton";
 
 const MainContent = () => {
   const [selectedFilm, setSelectedFilm] = useState("");
@@ -57,6 +58,7 @@ const MainContent = () => {
         setSelectedCharacters={setSelectedCharacters}
         handleCharactersSelect={handleCharactersSelect}
       />
+      <ScrollTopButton />
     </main>
   );
 };
