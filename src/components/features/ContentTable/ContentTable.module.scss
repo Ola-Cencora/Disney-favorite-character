@@ -1,14 +1,9 @@
-@import '../../../styles/settings.scss';
+@import '../../../styles/variables.scss';
 
-.table {
-    margin: 30px auto;
-    max-width: 70vw;
-
-    &__image {
-        height: 120px;
-
-        &___img {
-            height: 100%;
-        }
-    }
+.main {
+  &__button {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
 }

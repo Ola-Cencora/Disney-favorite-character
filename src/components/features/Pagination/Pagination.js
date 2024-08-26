@@ -4,59 +4,83 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import PropTypes from "prop-types";
-import styles from './Pagination.module.scss';
+import styles from "./Pagination.module.scss";
+import { PAGINATION_PAGES } from "../../../constans";
 
-const Pagination = ({
-  nextPage,
-  previousPage,
-  firstPage,
-  lastPage,
-  currentPage,
-  totalPages,
-  goToPage,
-}) => {
+const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
+  const handleFirstPage = () => setCurrentPage(1);
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+  const handleGoToPage = (pageNumber) => setCurrentPage(pageNumber);
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+  const handleLastPage = () => setCurrentPage(totalPages);
+
+  const pageButtons = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(PAGINATION_PAGES / 2));
+    let endPage = startPage + PAGINATION_PAGES - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - PAGINATION_PAGES + 1);
+    }
+
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index
+    );
+  };
+
   return (
     <section className={styles.pagination}>
       <Button
         disabled={currentPage === 1}
-        onClick={firstPage}
+        onClick={handleFirstPage}
         content={<MdKeyboardDoubleArrowLeft />}
+        ariaLabel={"first page"}
+        variant="round"
       />
       <Button
         disabled={currentPage === 1}
-        onClick={previousPage}
+        onClick={handlePreviousPage}
         content={<MdKeyboardArrowLeft />}
+        ariaLabel={"previous page"}
+        variant="round"
       />
-      {[...Array(totalPages)].map((_, index) => (
+      {pageButtons().map((page) => (
         <Button
-          key={index}
-          content={index + 1}
-          onClick={() => goToPage(index + 1)}
-          disabled={currentPage === index + 1}
+          key={page}
+          content={page}
+          onClick={() => handleGoToPage(page)}
+          disabled={currentPage === page || totalPages === 1}
+          ariaLabel={`page ${page}`}
+          variant="round"
         />
       ))}
       <Button
         disabled={currentPage === totalPages}
-        onClick={nextPage}
+        onClick={handleNextPage}
         content={<MdKeyboardArrowRight />}
+        ariaLabel={"next page"}
+        variant="round"
       />
       <Button
         disabled={currentPage === totalPages}
-        onClick={lastPage}
+        onClick={handleLastPage}
         content={<MdKeyboardDoubleArrowRight />}
+        ariaLabel={"last page"}
+        variant="round"
       />
     </section>
   );
 };
 
 Pagination.propTypes = {
-  nextPage: PropTypes.func.isRequired,
-  previousPage: PropTypes.func.isRequired,
-  firstPage: PropTypes.func.isRequired,
-  lastPage: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   totalPages: PropTypes.number.isRequired,
-  goToPage: PropTypes.func.isRequired,
 };
 
 export default Pagination;

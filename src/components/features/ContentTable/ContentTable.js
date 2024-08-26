@@ -1,101 +1,64 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import {
-  goToFirstPage,
-  goToLastPage,
-  goToNextPage,
-  goToPage,
-  goToPreviousPage,
-} from "../../../utils/changePage";
-import styles from "./ContentTable.module.scss";
 import Pagination from "../Pagination/Pagination";
+import CharactersTable from "../CharactersTable/CharactersTable";
+import Spinner from "../../common/Spinner/Spinner";
+import Button from "../../common/Button/Button";
+import PropTypes from "prop-types";
+import styles from "./ContentTable.module.scss";
 
-const ContentTable = () => {
-  const [characters, setCharacters] = useState([]);
-  const [count, setCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(count / itemsPerPage);
-
-  const sortedCharacters = characters.sort((a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
-    return 0;
-  });
-
-  useEffect(() => {
-    fetch("https://api.disneyapi.dev/character")
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacters(data.data);
-        setCount(data.info.count);
-      })
-      .catch((error) => {
-        console.error("Error fetching characters:", error);
-      });
-  }, []);
-
-  const indexOfLastCharacter = currentPage * itemsPerPage;
-  const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
-  const currentCharacters = sortedCharacters.slice(
-    indexOfFirstCharacter,
-    indexOfLastCharacter
-  );
-
-  const characterInfo = (videoGames, imageUrl, name) => (
+const ContentTable = ({
+  selectedFilm,
+  characters,
+  isPending,
+  error,
+  currentPage,
+  setCurrentPage,
+  totalPages,
+  selectedCharacters,
+  setSelectedCharacters,
+  handleCharactersSelect,
+}) => {
+  return (
     <>
-      <td>{videoGames.length > 0 ? videoGames.join(", ") : "no info"}</td>
-      <td className={styles.table__image}>
-        <img className={styles.table__image___img} src={imageUrl} alt={name} />
-      </td>
-      <td>
-        <input type="checkbox" />
-      </td>
+      {isPending && <Spinner />}
+      {error && <p>{error}</p>}
+      {characters && !isPending && (
+        <section className={styles.main}>
+          <CharactersTable
+            characters={characters}
+            selectedFilm={selectedFilm}
+            selectedCharacters={selectedCharacters}
+            setSelectedCharacters={setSelectedCharacters}
+          />
+          <div className={styles.main__button}>
+            <Button
+              onClick={handleCharactersSelect}
+              content="create your list"
+              disabled={selectedCharacters.length === 0}
+              variant="flat"
+            />
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        </section>
+      )}
     </>
   );
+};
 
-  return (
-    <section>
-      <table className={styles.table}>
-        <tr>
-          <th>Name</th>
-          <th>Movie</th>
-          <th>Video games</th>
-          <th>Me!</th>
-          <th>Choose me</th>
-        </tr>
-        {currentCharacters.map(({ _id, name, films, videoGames, imageUrl }) => (
-          <>
-            {films.length > 0 ? (
-              films.map((film, index) => (
-                <tr key={`${_id}-${index + 1}`}>
-                  <td>{name}</td>
-                  <td>{film}</td>
-                  {characterInfo(videoGames, imageUrl, name)}
-                </tr>
-              ))
-            ) : (
-              <tr key={_id}>
-                <td>{name}</td>
-                <td>no info</td>
-                {characterInfo(videoGames, imageUrl, name)}
-              </tr>
-            )}
-          </>
-        ))}
-      </table>
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        nextPage={() => goToNextPage(setCurrentPage, currentPage, totalPages)}
-        previousPage={() => goToPreviousPage(setCurrentPage, currentPage)}
-        firstPage={() => goToFirstPage(setCurrentPage)}
-        lastPage={() => goToLastPage(setCurrentPage, totalPages)}
-        goToPage={(pageNumber) => goToPage(setCurrentPage, pageNumber)}
-      />
-    </section>
-  );
+ContentTable.propTypes = {
+  selectedFilm: PropTypes.string,
+  characters: PropTypes.array.isRequired,
+  isPending: PropTypes.bool.isRequired,
+  error: PropTypes.bool,
+  currentPage: PropTypes.number,
+  setCurrentPage: PropTypes.func,
+  totalPages: PropTypes.number.isRequired,
+  selectedCharacters: PropTypes.array,
+  setSelectedCharacters: PropTypes.func.isRequired,
+  handleCharactersSelect: PropTypes.func.isRequired,
 };
 
 export default ContentTable;

@@ -1,0 +1,9 @@
+@import '../../../styles/variables.scss';
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 0;
+}
